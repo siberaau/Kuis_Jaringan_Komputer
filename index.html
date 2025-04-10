@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Malware Quiz Defender</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
+    .quiz-box { background: white; padding: 20px; border-radius: 10px; max-width: 700px; margin: auto; }
+    .question { margin-bottom: 20px; }
+    .options button { display: block; width: 100%; margin: 5px 0; padding: 10px; }
+    .result { margin-top: 20px; font-weight: bold; }
+    .input-section { margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+<div class="quiz-box">
+  <h1>Malware Quiz Defender</h1>
+  <div class="input-section" id="inputSection">
+    <label for="namaTaruna">Nama Taruna:</label><br>
+    <input type="text" id="namaTaruna" required><br><br>
+    <label for="kelasTaruna">Kelas:</label><br>
+    <input type="text" id="kelasTaruna" required><br><br>
+    <label for="noAk">Nomor AK:</label><br>
+    <input type="text" id="noAk" required><br><br>
+    <button onclick="startQuiz()">Mulai Kuis</button>
+  </div>
+  <div id="quiz" style="display:none;"></div>
+  <div class="result" id="result"></div>
+  <button onclick="location.reload()" style="display:none;" id="reloadBtn">Ulangi Kuis</button>
+</div>
+
+<script>
+const quizData = [
+  {
+    "question": "Apa tujuan utama dari malware?",
+    "options": [
+      "Melindungi sistem komputer",
+      "Menghapus file tidak penting",
+      "Mengganggu, merusak, atau mencuri data",
+      "Meningkatkan kecepatan jaringan"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Siapa ilmuwan pertama yang memperkenalkan teori self-replicating automata?",
+    "options": [
+      "Alan Turing",
+      "John von Neumann",
+      "Tim Berners-Lee",
+      "Claude Shannon"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Malware pertama yang dikenal bernama Creeper diciptakan pada tahun?",
+    "options": [
+      "1950",
+      "1969",
+      "1972",
+      "1980"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Virus bekerja dengan cara?",
+    "options": [
+      "Mengganti sistem operasi",
+      "Menempel pada program dan menggandakan diri saat dijalankan",
+      "Menghapus semua file sistem",
+      "Meningkatkan performa CPU"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Apa perbedaan utama antara worm dan virus?",
+    "options": [
+      "Worm hanya menyerang perangkat lunak antivirus",
+      "Virus menyebar otomatis, worm perlu bantuan pengguna",
+      "Worm menyebar otomatis tanpa interaksi pengguna",
+      "Tidak ada perbedaan"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Jenis malware yang menyamar sebagai aplikasi sah disebut?",
+    "options": [
+      "Trojan",
+      "Worm",
+      "Rootkit",
+      "Adware"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Malware yang memata-matai aktivitas pengguna disebut?",
+    "options": [
+      "Adware",
+      "Ransomware",
+      "Spyware",
+      "Botnet"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Fase pertama dari siklus hidup malware disebut?",
+    "options": [
+      "Execution",
+      "Propagation",
+      "Dormant",
+      "Triggering"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Logic bomb aktif berdasarkan?",
+    "options": [
+      "Pembaruan antivirus",
+      "Kondisi logis atau waktu tertentu",
+      "Kecepatan internet",
+      "Koneksi bluetooth"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Rootkit bertujuan untuk?",
+    "options": [
+      "Mempercepat koneksi internet",
+      "Menampilkan iklan pop-up",
+      "Menyembunyikan aktivitas berbahaya dari sistem",
+      "Menginstal sistem operasi baru"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Contoh ransomware terkenal yang menyerang pada 2017 adalah?",
+    "options": [
+      "Mirai",
+      "Stuxnet",
+      "WannaCry",
+      "Zeus"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Cara efektif mencegah infeksi malware?",
+    "options": [
+      "Tidak mengupdate antivirus",
+      "Mengunduh software bajakan",
+      "Rutin update sistem dan antivirus",
+      "Menonaktifkan firewall"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Jenis malware yang digunakan untuk menyerang IoT dan meluncurkan serangan DDoS adalah?",
+    "options": [
+      "Emotet",
+      "Mirai",
+      "Trickbot",
+      "LoJax"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Apa itu botnet?",
+    "options": [
+      "Jaringan komputer yang dilindungi",
+      "Jaringan komputer yang dikendalikan oleh malware",
+      "Alat keamanan jaringan",
+      "Sistem operasi baru"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Trapdoor/backdoor adalah?",
+    "options": [
+      "Lubang pintu literal",
+      "Pintu belakang yang memungkinkan akses tanpa otorisasi",
+      "Proteksi tambahan firewall",
+      "Pengganti antivirus"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Adware umumnya menampilkan?",
+    "options": [
+      "Iklan berlebihan dan mengganggu",
+      "Error sistem",
+      "Proteksi tambahan",
+      "Driver perangkat"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Payload malware adalah?",
+    "options": [
+      "Instruksi utama yang dijalankan malware",
+      "Berat malware dalam megabyte",
+      "Jumlah file yang terinfeksi",
+      "Waktu aktif malware"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Triggering phase dalam siklus hidup malware mengacu pada?",
+    "options": [
+      "Fase diam",
+      "Waktu malware menghapus dirinya sendiri",
+      "Saat kondisi pemicu terjadi dan malware aktif",
+      "Pemutakhiran software"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Malware dapat menyebar melalui?",
+    "options": [
+      "Flashdisk, email, jaringan internet",
+      "Hanya lewat BIOS",
+      "Hanya lewat update Windows",
+      "Hanya lewat CD/DVD"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Tujuan utama ransomware adalah?",
+    "options": [
+      "Memberi hadiah ke pengguna",
+      "Mengunci sistem dan meminta tebusan",
+      "Menambah kecepatan RAM",
+      "Menghapus program antivirus"
+    ],
+    "answer": 1
+  }
+];
+
+let current = 0;
+let score = 0;
+let jawabanDipilih = [];
+let nama = "", kelas = "", noAk = "";
+
+function startQuiz() {
+  nama = document.getElementById("namaTaruna").value.trim();
+  kelas = document.getElementById("kelasTaruna").value.trim();
+  noAk = document.getElementById("noAk").value.trim();
+  if (!nama || !kelas || !noAk) {
+    alert("Silakan isi semua data Taruna.");
+    return;
+  }
+  document.getElementById("inputSection").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  loadQuestion();
+}
+
+function loadQuestion() {
+  if (current >= quizData.length) {
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("reloadBtn").style.display = "block";
+    const resultText = `Skor akhir ${nama} (${noAk}) dari kelas ${kelas}: ${score}/${quizData.length}`;
+    document.getElementById("result").innerHTML = resultText;
+
+    // Kirim ke Google Sheets
+    fetch("https://script.google.com/macros/s/AKfycbzwGoTURMOvkxVLjOlg-ZfsqpX-L0mT39iDqdt7GFXpwm4Es6OS_HPrH0JqwNtE_fE_/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nama: nama,
+        kelas: kelas,
+        noAk: noAk,
+        skor: score,
+        total: quizData.length,
+        jawaban: jawabanDipilih
+      })
+    })
+    .then(res => console.log("✅ Data terkirim ke Google Sheets"))
+    .catch(err => console.error("❌ Gagal kirim ke Sheets", err));
+    return;
+  }
+
+  const q = quizData[current];
+  const buttons = q.options.map((opt, i) => `<button onclick="checkAnswer(${i})">${opt}</button>`).join("");
+  document.getElementById("quiz").innerHTML = `
+    <div class="question"><strong>Soal ${current + 1}:</strong> ${q.question}</div>
+    <div class="options">${buttons}</div>
+  `;
+}
+
+function checkAnswer(selected) {
+  const q = quizData[current];
+  jawabanDipilih.push(selected);
+  if (selected === q.answer) {
+    score++;
+    alert("✅ Benar!\n" + q.explanation);
+  } else {
+    alert("❌ Salah!\n" + q.explanation);
+  }
+  current++;
+  loadQuestion();
+}
+</script>
+</body>
+</html>
