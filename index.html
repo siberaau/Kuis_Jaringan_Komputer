@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Malware Quiz Defender</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
+    .quiz-box { background: white; padding: 20px; border-radius: 10px; max-width: 700px; margin: auto; }
+    .question { margin-bottom: 20px; }
+    .options button { display: block; width: 100%; margin: 5px 0; padding: 10px; }
+    .result { margin-top: 20px; font-weight: bold; }
+    .input-section { margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+<div class="quiz-box">
+  <h1>Malware Quiz Defender</h1>
+  <div class="input-section" id="inputSection">
+    <label for="namaTaruna">Nama Taruna:</label><br>
+    <input type="text" id="namaTaruna" required><br><br>
+    <label for="kelasTaruna">Kelas:</label><br>
+    <input type="text" id="kelasTaruna" required><br><br>
+    <label for="noAk">Nomor AK:</label><br>
+    <input type="text" id="noAk" required><br><br>
+    <button onclick="startQuiz()">Mulai Kuis</button>
+  </div>
+  <div id="quiz" style="display:none;"></div>
+  <div class="result" id="result"></div>
+  <button onclick="location.reload()" style="display:none;" id="reloadBtn">Ulangi Kuis</button>
+</div>
+
+<script>
+const quizData = [
+  {
+    question: "Apa yang dimaksud dengan malware?",
+    options: ["Perangkat keras jahat", "Perangkat lunak berbahaya", "Antivirus lokal", "Sistem keamanan"],
+    answer: 1,
+    explanation: "Malware adalah perangkat lunak berbahaya yang dirancang untuk merusak, mengganggu, atau mencuri data dari sistem komputer."
+  },
+  {
+    question: "Siapakah ilmuwan yang pertama kali memperkenalkan konsep self-replication automata?",
+    options: ["Alan Turing", "Von Neumann", "Morris", "McIlroy"],
+    answer: 1,
+    explanation: "Von Neumann memperkenalkan konsep self-replication automata pada tahun 1949."
+  }
+];
+
+let current = 0;
+let score = 0;
+let nama = "", kelas = "", noAk = "";
+
+function startQuiz() {
+  nama = document.getElementById("namaTaruna").value.trim();
+  kelas = document.getElementById("kelasTaruna").value.trim();
+  noAk = document.getElementById("noAk").value.trim();
+  if (!nama || !kelas || !noAk) {
+    alert("Silakan isi semua data Taruna.");
+    return;
+  }
+  document.getElementById("inputSection").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  loadQuestion();
+}
+
+function loadQuestion() {
+  if (current >= quizData.length) {
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("reloadBtn").style.display = "block";
+    const resultText = `Skor akhir ${nama} (${noAk}) dari kelas ${kelas}: ${score}/${quizData.length}`;
+    document.getElementById("result").innerHTML = resultText;
+
+    // Kirim data ke Google Sheets
+    fetch("https://script.google.com/macros/s/AKfycbzwGoTURMOvkxVLjOlg-ZfsqpX-L0mT39iDqdt7GFXpwm4Es6OS_HPrH0JqwNtE_fE_/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nama: nama,
+        kelas: kelas,
+        noAk: noAk,
+        skor: score,
+        total: quizData.length
+      })
+    }).then(res => console.log("Terkirim ke Sheets"))
+      .catch(err => console.error("Gagal kirim ke Sheets", err));
+
+    return;
+  }
+
+  const q = quizData[current];
+  const buttons = q.options.map((opt, i) => `<button onclick="checkAnswer(${i})">${opt}</button>`).join("");
+  document.getElementById("quiz").innerHTML = `
+    <div class="question"><strong>Soal ${current + 1}:</strong> ${q.question}</div>
+    <div class="options">${buttons}</div>
+  `;
+}
+
+function checkAnswer(selected) {
+  const q = quizData[current];
+  if (selected === q.answer) {
+    score++;
+    alert("✅ Benar!\n" + q.explanation);
+  } else {
+    alert("❌ Salah!\n" + q.explanation);
+  }
+  current++;
+  loadQuestion();
+}
+</script>
+</body>
+</html>
