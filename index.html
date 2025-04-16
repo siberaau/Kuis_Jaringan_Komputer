@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Ujian Keamanan Informasi</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+    .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
+    .question { margin-bottom: 20px; }
+    .options { margin-left: 20px; }
+    .timer { font-weight: bold; color: red; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Ujian Keamanan Informasi</h2>
+  <label>Nama Taruna:</label><input type="text" id="nama"><br>
+  <label>Kelas:</label><input type="text" id="kelas"><br>
+  <label>Nomor AK:</label><input type="text" id="noak"><br><br>
+  <div class="timer" id="timer">Sisa waktu: 60:00</div>
+  <form id="quizForm">
+    <div id="quiz"></div>
+    <button type="submit">Selesai & Unduh PDF</button>
+  </form>
+</div>
+
+<script>
+const questions = [{"question": "Apa itu keamanan informasi?", "options": ["Melindungi data", "Menyimpan data", "Menghancurkan data", "Mempercepat data"], "answer": 0}, {"question": "Manakah yang bukan jenis ancaman keamanan informasi?", "options": ["Malware", "Phishing", "Encryption", "Ransomware"], "answer": 2}, {"question": "Apa yang dimaksud dengan Confidentiality?", "options": ["Menjaga data tetap aman", "Melindungi kerahasiaan data", "Menyimpan data", "Memastikan data tersedia"], "answer": 1}, {"question": "Fungsi dari firewall adalah?", "options": ["Memblokir virus", "Memblokir akses yang tidak sah", "Menyimpan data", "Mempercepat koneksi internet"], "answer": 1}, {"question": "Siapa yang pertama kali mengenalkan konsep Public Key Infrastructure (PKI)?", "options": ["Bruce Schneier", "Whitfield Diffie", "Claude Shannon", "Martin Hellman"], "answer": 1}, {"question": "Manakah yang termasuk teknik social engineering?", "options": ["Phishing", "Encryption", "VPN", "Firewall"], "answer": 0}, {"question": "Apa yang dimaksud dengan autentikasi?", "options": ["Verifikasi identitas", "Menyimpan data", "Enkripsi data", "Menghapus data"], "answer": 0}, {"question": "Manakah yang bukan alat enkripsi?", "options": ["SSL/TLS", "AES", "MD5", "RDP"], "answer": 3}, {"question": "Keamanan fisik melibatkan?", "options": ["Perlindungan jaringan", "Kerahasiaan data", "Perlindungan perangkat keras", "Enkripsi data"], "answer": 2}, {"question": "Apa yang dimaksud dengan kebocoran data?", "options": ["Kehilangan data", "Penggunaan data tanpa izin", "Pemulihan data", "Penyimpanan data"], "answer": 1}, {"question": "Jenis serangan apa yang dilakukan untuk mengelabui pengguna agar memberikan informasi sensitif?", "options": ["Denial of Service", "Phishing", "Trojan", "Worm"], "answer": 1}, {"question": "Apa itu Ransomware?", "options": ["Perangkat lunak untuk enkripsi data", "Program yang menyebar dengan sendirinya", "Perangkat untuk mengakses informasi pribadi", "Program yang mengancam untuk mengenkripsi data hingga tebusan dibayar"], "answer": 3}, {"question": "Apa itu Malware?", "options": ["Perangkat keras jahat", "Perangkat lunak berbahaya", "Jenis firewall", "Antivirus"], "answer": 1}, {"question": "Apa yang dimaksud dengan patching?", "options": ["Memperbaiki kerentanannya", "Memperbarui perangkat lunak", "Menghapus data", "Mengalihkan lalu lintas jaringan"], "answer": 1}, {"question": "Manakah dari berikut ini yang merupakan risiko terkait dengan penggunaan Wi-Fi publik?", "options": ["Meningkatkan kecepatan", "Intersepsi data", "Keamanan jaringan yang lebih tinggi", "Tidak ada risiko"], "answer": 1}, {"question": "Apa yang dimaksud dengan cryptojacking?", "options": ["Penambangan cryptocurrency tanpa izin", "Enkripsi data", "Penggunaan perangkat keras secara ilegal", "Pencurian identitas online"], "answer": 0}, {"question": "Apa yang dimaksud dengan Zero-day attack?", "options": ["Serangan yang terjadi sebelum celah keamanan diketahui", "Serangan yang terjadi pada sistem yang sudah diperbaiki", "Serangan melalui email phishing", "Serangan DDoS"], "answer": 0}, {"question": "Apa yang harus dilakukan untuk menghindari serangan social engineering?", "options": ["Meningkatkan pengamanan fisik", "Verifikasi identitas secara rutin", "Menggunakan enkripsi end-to-end", "Mengaktifkan VPN"], "answer": 1}, {"question": "Apa yang dimaksud dengan Backdoor?", "options": ["Jalur akses tidak sah ke dalam sistem", "Firewall yang memblokir lalu lintas", "Algoritma untuk enkripsi", "Serangan terhadap sistem"], "answer": 0}, {"question": "Apa yang dimaksud dengan konsep Integrity dalam keamanan informasi?", "options": ["Melindungi data agar tidak hilang", "Menjamin data tidak berubah tanpa izin", "Menjaga data tetap aman", "Memastikan data tersedia"], "answer": 1}, {"question": "Apa itu Botnet?", "options": ["Jaringan komputer yang dilindungi", "Jaringan komputer yang dikendalikan oleh malware", "Alat keamanan jaringan", "Sistem operasi baru"], "answer": 1}, {"question": "Apa itu Rootkit?", "options": ["Program untuk menyembunyikan aktivitas berbahaya", "Firewall", "Sistem anti-malware", "Program penambang bitcoin"], "answer": 0}, {"question": "Apa yang dimaksud dengan Denial of Service (DoS)?", "options": ["Serangan untuk memperlambat kinerja komputer", "Serangan untuk menolak layanan atau sumber daya dari server", "Penggunaan bandwidth untuk menyebarkan virus", "Serangan untuk mencuri data pengguna"], "answer": 1}, {"question": "Apa yang dimaksud dengan Two-factor authentication (2FA)?", "options": ["Sistem verifikasi dua tahap untuk login", "Enkripsi ganda pada password", "Penggunaan perangkat keras untuk akses", "Verifikasi ID kartu kredit"], "answer": 0}, {"question": "Bagaimana cara mencegah serangan phishing?", "options": ["Membuka semua email", "Memasang filter spam", "Klik semua link di email", "Menggunakan password yang sama di semua akun"], "answer": 1}, {"question": "Apa itu Phishing?", "options": ["Serangan menggunakan email palsu untuk mencuri informasi", "Serangan untuk menghapus data pengguna", "Serangan untuk melacak lokasi pengguna", "Serangan melalui perangkat lunak"], "answer": 0}, {"question": "Apa itu VPN (Virtual Private Network)?", "options": ["Jaringan pribadi yang digunakan untuk mengakses internet secara aman", "Jaringan untuk memblokir akses situs web", "Pengaturan port untuk meningkatkan akses jaringan", "Jaringan WiFi untuk penggunaan publik"], "answer": 0}, {"question": "Jenis serangan apa yang memanfaatkan perangkat IoT yang tidak aman?", "options": ["DDoS", "Phishing", "Spyware", "Ransomware"], "answer": 0}];
+
+let timeLeft = 3600; // 60 minutes
+let answers = [];
+
+function renderQuiz() {
+  const qDiv = document.getElementById("quiz");
+  questions.forEach((q, i) => {
+    const block = document.createElement("div");
+    block.className = "question";
+    block.innerHTML = `<strong>${i + 1}. ${q.q}</strong>` +
+      q.options.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join("");
+    qDiv.appendChild(block);
+  });
+}
+
+function updateTimer() {
+  const el = document.getElementById("timer");
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  el.textContent = "Sisa waktu: " + String(m).padStart(2, '0') + ":" + String(s).padStart(2, '0');
+  if (timeLeft <= 0) document.getElementById("quizForm").requestSubmit();
+  else { timeLeft--; setTimeout(updateTimer, 1000); }
+}
+
+document.getElementById("quizForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const nama = document.getElementById("nama").value.trim();
+  const kelas = document.getElementById("kelas").value.trim();
+  const noak = document.getElementById("noak").value.trim();
+  if (!nama || !kelas || !noak) return alert("Lengkapi data terlebih dahulu!");
+  let skor = 0;
+  answers = questions.map((q, i) => {
+    const chosen = document.querySelector(`input[name="q${i}"]:checked`);
+    const val = chosen ? parseInt(chosen.value) : -1;
+    if (val === q.answer) skor++;
+    return val;
+  });
+
+  const hasil = `Nama: ${nama}\nKelas: ${kelas}\nNo AK: ${noak}\nSkor: ${skor}/${questions.length}\n\nJawaban:\n` +
+    answers.map((a, i) => `Soal ${i + 1}: ${a === -1 ? "Kosong" : questions[i].options[a]}`).join("\n");
+
+  // Generate PDF
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFontSize(12);
+  doc.text(hasil, 10, 10);
+
+  const qr = qrcode(0, "L");
+  qr.addData(`Nama:${nama},NoAK:${noak},Skor:${skor}`);
+  qr.make();
+  const img = qr.createDataURL();
+  const imgTag = new Image();
+  imgTag.onload = () => {
+    doc.addImage(imgTag, "PNG", 140, 10, 50, 50);
+    doc.save(`hasil_kuis_${nama.replace(/\s+/g, "_")}.pdf`);
+  };
+  imgTag.src = img;
+});
+
+renderQuiz();
+updateTimer();
+</script>
+</body>
+</html>
