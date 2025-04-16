@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kuis Jaringan + PDF & QR</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f2f2f2; }
+    .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
+    .question { margin-bottom: 20px; }
+    .timer { font-weight: bold; color: red; margin-bottom: 20px; }
+    .options label { display: block; margin: 4px 0; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Kuis Jaringan - Taruna</h2>
+  <label>Nama:</label><input id="nama"><br>
+  <label>Kelas:</label><input id="kelas"><br>
+  <label>Nomor AK:</label><input id="noak"><br><br>
+  <div class="timer" id="timer">Sisa waktu: 15:00</div>
+
+  <form id="quizForm">
+    <div id="quiz"></div>
+    <button type="submit">Selesai & Download PDF</button>
+  </form>
+</div>
+
+<script>
+const questions = [
+  {q: "Apa fungsi utama nslookup?", o: ["Cek port", "Update DNS", "Lihat info DNS", "Scan malware"], a: 2},
+  {q: "Perintah untuk melihat koneksi aktif?", o: ["ping", "ipconfig", "netstat", "traceroute"], a: 2},
+  {q: "ping digunakan untuk?", o: ["Scan virus", "Test koneksi", "Backup", "Enkripsi data"], a: 1},
+  {q: "traceroute digunakan untuk?", o: ["Cek kecepatan CPU", "Melihat rute jaringan", "Menghapus cache", "Cek antivirus"], a: 1},
+  {q: "whois digunakan untuk?", o: ["Cek IP publik", "Lihat info domain", "Edit DNS", "Pindai port"], a: 1},
+  {q: "Perintah menampilkan IP di cmd?", o: ["dir", "ping", "ipconfig", "cd"], a: 2},
+  {q: "Ciri alamat IP adalah?", o: ["A-Z", "0-255", "Hanya 1 digit", "Tanpa titik"], a: 1},
+  {q: "DNS adalah?", o: ["Database Number Server", "Dynamic Network System", "Domain Name System", "Data Network Set"], a: 2},
+  {q: "Apa output dari ping berhasil?", o: ["Request timed out", "Reply from", "Error", "Failed"], a: 1},
+  {q: "Default port HTTP adalah?", o: ["21", "53", "80", "443"], a: 2}
+];
+
+let timeLeft = 900;
+function renderQuiz() {
+  const qDiv = document.getElementById("quiz");
+  questions.forEach((q, i) => {
+    const block = document.createElement("div");
+    block.className = "question";
+    block.innerHTML = `<strong>${i + 1}. ${q.q}</strong>` +
+      q.o.map((opt, j) =>
+        `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join("");
+    qDiv.appendChild(block);
+  });
+}
+function updateTimer() {
+  const el = document.getElementById("timer");
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  el.textContent = "Sisa waktu: " + String(m).padStart(2, '0') + ":" + String(s).padStart(2, '0');
+  if (timeLeft <= 0) document.getElementById("quizForm").requestSubmit();
+  else { timeLeft--; setTimeout(updateTimer, 1000); }
+}
+document.getElementById("quizForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const nama = document.getElementById("nama").value.trim();
+  const kelas = document.getElementById("kelas").value.trim();
+  const noak = document.getElementById("noak").value.trim();
+  if (!nama || !kelas || !noak) return alert("Lengkapi data terlebih dahulu!");
+  let skor = 0;
+  const jawaban = questions.map((q, i) => {
+    const chosen = document.querySelector(`input[name="q${i}"]:checked`);
+    const val = chosen ? parseInt(chosen.value) : -1;
+    if (val === q.a) skor++;
+    return val;
+  });
+
+  const hasil = `Nama: ${nama}\nKelas: ${kelas}\nNo AK: ${noak}\nSkor: ${skor}/${questions.length}\n\nJawaban:\n` +
+    jawaban.map((a, i) => `Soal ${i + 1}: ${a === -1 ? "Kosong" : questions[i].o[a]}`).join("\n");
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFontSize(12);
+  doc.text(hasil, 10, 10);
+
+  const qr = qrcode(0, "L");
+  qr.addData(`Nama:${nama},NoAK:${noak},Skor:${skor}`);
+  qr.make();
+  const img = qr.createDataURL();
+  const imgTag = new Image();
+  imgTag.onload = () => {
+    doc.addImage(imgTag, "PNG", 140, 10, 50, 50);
+    doc.save(`hasil_kuis_${nama.replace(/\s+/g, "_")}.pdf`);
+  };
+  imgTag.src = img;
+});
+
+renderQuiz();
+updateTimer();
+</script>
+</body>
+</html>
