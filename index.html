@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAS Keamanan Informasi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .form-container {
+            width: 60%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        fieldset {
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        legend {
+            font-weight: bold;
+        }
+        label {
+            display: block;
+            margin: 8px 0;
+        }
+        .input-field {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .score {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>UAS Keamanan Informasi</h1>
+    <div class="form-container">
+        <form id="quiz-form" onsubmit="return false">
+            <label for="nama-taruna">Nama Taruna:</label>
+            <input type="text" id="nama-taruna" name="nama-taruna" class="input-field" required>
+            
+            <label for="kelas">Kelas:</label>
+            <input type="text" id="kelas" name="kelas" class="input-field" required>
+            
+            <label for="no-ak">No. AK:</label>
+            <input type="text" id="no-ak" name="no-ak" class="input-field" required>
+            
+            <h3>Soal Pilihan Ganda (25 soal × 2 poin)</h3>
+
+    <fieldset>
+        <legend>Soal 1:</legend>
+        <p>Prinsip utama dari keamanan informasi adalah:</p>
+        <label><input type="radio" name="q1" value="a"> a. Privacy, Enkripsi, Penetrasi</label><br>
+        <label><input type="radio" name="q1" value="b"> b. Confidentiality, Integrity, Availability</label><br>
+        <label><input type="radio" name="q1" value="c"> c. Firewall, Antivirus, Backup</label><br>
+        <label><input type="radio" name="q1" value="d"> d. Authentication, Authorization, Access Control</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 2:</legend>
+        <p>Serangan yang menyebabkan server tidak bisa melayani permintaan disebut:</p>
+        <label><input type="radio" name="q2" value="a"> a. Interception</label><br>
+        <label><input type="radio" name="q2" value="b"> b. Modification</label><br>
+        <label><input type="radio" name="q2" value="c"> c. Interruption</label><br>
+        <label><input type="radio" name="q2" value="d"> d. Fabrication</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 3:</legend>
+        <p>Fungsi utama firewall adalah:</p>
+        <label><input type="radio" name="q3" value="a"> a. Mendeteksi virus</label><br>
+        <label><input type="radio" name="q3" value="b"> b. Melindungi database</label><br>
+        <label><input type="radio" name="q3" value="c"> c. Menyaring lalu lintas jaringan</label><br>
+        <label><input type="radio" name="q3" value="d"> d. Mempercepat koneksi internet</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 4:</legend>
+        <p>Salah satu contoh perangkat keamanan pada sistem operasi Windows adalah:</p>
+        <label><input type="radio" name="q4" value="a"> a. FirewallD</label><br>
+        <label><input type="radio" name="q4" value="b"> b. BitLocker</label><br>
+        <label><input type="radio" name="q4" value="c"> c. iptables</label><br>
+        <label><input type="radio" name="q4" value="d"> d. SELinux</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 5:</legend>
+        <p>Dalam konsep VLAN, pengaturan jaringan dapat dilakukan berdasarkan:</p>
+        <label><input type="radio" name="q5" value="a"> a. Lokasi fisik perangkat</label><br>
+        <label><input type="radio" name="q5" value="b"> b. Jenis kabel jaringan</label><br>
+        <label><input type="radio" name="q5" value="c"> c. Departemen/organisasi</label><br>
+        <label><input type="radio" name="q5" value="d"> d. MAC Address</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 6:</legend>
+        <p>Jenis malware yang menyamar sebagai aplikasi sah dan mencuri data adalah:</p>
+        <label><input type="radio" name="q6" value="a"> a. Worm</label><br>
+        <label><input type="radio" name="q6" value="b"> b. Rootkit</label><br>
+        <label><input type="radio" name="q6" value="c"> c. Trojan</label><br>
+        <label><input type="radio" name="q6" value="d"> d. Botnet</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 7:</legend>
+        <p>SQL Injection adalah jenis serangan yang umum terhadap:</p>
+        <label><input type="radio" name="q7" value="a"> a. Sistem operasi</label><br>
+        <label><input type="radio" name="q7" value="b"> b. Jaringan nirkabel</label><br>
+        <label><input type="radio" name="q7" value="c"> c. Database</label><br>
+        <label><input type="radio" name="q7" value="d"> d. BIOS</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 8:</legend>
+        <p>Tahap malware yang menunggu kondisi tertentu sebelum aktif disebut:</p>
+        <label><input type="radio" name="q8" value="a"> a. Triggering</label><br>
+        <label><input type="radio" name="q8" value="b"> b. Dormant</label><br>
+        <label><input type="radio" name="q8" value="c"> c. Propagation</label><br>
+        <label><input type="radio" name="q8" value="d"> d. Execution</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 9:</legend>
+        <p>Proses mengubah plainteks menjadi cipherteks disebut:</p>
+        <label><input type="radio" name="q9" value="a"> a. Enkripsi</label><br>
+        <label><input type="radio" name="q9" value="b"> b. Dekripsi</label><br>
+        <label><input type="radio" name="q9" value="c"> c. Transformasi</label><br>
+        <label><input type="radio" name="q9" value="d"> d. Hashing</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 10:</legend>
+        <p>Salah satu ciri kriptografi kunci simetri adalah:</p>
+        <label><input type="radio" name="q10" value="a"> a. Menggunakan dua kunci berbeda</label><br>
+        <label><input type="radio" name="q10" value="b"> b. Cocok untuk enkripsi dan tanda tangan digital</label><br>
+        <label><input type="radio" name="q10" value="c"> c. Menggunakan satu kunci untuk enkripsi dan dekripsi</label><br>
+        <label><input type="radio" name="q10" value="d"> d. Tidak memerlukan kunci sama sekali</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 11:</legend>
+        <p>Apa tujuan utama dari prinsip availability dalam keamanan informasi?</p>
+        <label><input type="radio" name="q11" value="a"> a. Menyembunyikan informasi dari pengguna</label><br>
+        <label><input type="radio" name="q11" value="b"> b. Menyediakan akses terbatas terhadap informasi</label><br>
+        <label><input type="radio" name="q11" value="c"> c. Menjaga agar informasi dapat diakses saat dibutuhkan</label><br>
+        <label><input type="radio" name="q11" value="d"> d. Menyediakan jalur enkripsi data</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 12:</legend>
+        <p>Proses membuktikan identitas pengguna disebut:</p>
+        <label><input type="radio" name="q12" value="a"> a. Authorization</label><br>
+        <label><input type="radio" name="q12" value="b"> b. Authentication</label><br>
+        <label><input type="radio" name="q12" value="c"> c. Accessibility</label><br>
+        <label><input type="radio" name="q12" value="d"> d. Allocation</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 13:</legend>
+        <p>Serangan jenis fabrication termasuk dalam model serangan:</p>
+        <label><input type="radio" name="q13" value="a"> a. Interruption</label><br>
+        <label><input type="radio" name="q13" value="b"> b. Modification</label><br>
+        <label><input type="radio" name="q13" value="c"> c. Interception</label><br>
+        <label><input type="radio" name="q13" value="d"> d. Fabrication</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 14:</legend>
+        <p>VLAN adalah teknologi jaringan yang memungkinkan:</p>
+        <label><input type="radio" name="q14" value="a"> a. Koneksi internet lebih cepat</label><br>
+        <label><input type="radio" name="q14" value="b"> b. Segmentasi jaringan secara virtual</label><br>
+        <label><input type="radio" name="q14" value="c"> c. Deteksi malware secara otomatis</label><br>
+        <label><input type="radio" name="q14" value="d"> d. Penyimpanan data di cloud</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 15:</legend>
+        <p>Manakah yang bukan merupakan fungsi firewall?</p>
+        <label><input type="radio" name="q15" value="a"> a. Menyaring lalu lintas jaringan</label><br>
+        <label><input type="radio" name="q15" value="b"> b. Menyediakan kunci enkripsi</label><br>
+        <label><input type="radio" name="q15" value="c"> c. Mencegah akses ilegal</label><br>
+        <label><input type="radio" name="q15" value="d"> d. Melindungi sistem dari serangan luar</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 16:</legend>
+        <p>Contoh malware yang tidak membutuhkan interaksi pengguna untuk menyebar:</p>
+        <label><input type="radio" name="q16" value="a"> a. Trojan</label><br>
+        <label><input type="radio" name="q16" value="b"> b. Worm</label><br>
+        <label><input type="radio" name="q16" value="c"> c. Spyware</label><br>
+        <label><input type="radio" name="q16" value="d"> d. Adware</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 17:</legend>
+        <p>Keunggulan utama sistem operasi Linux dalam keamanan adalah:</p>
+        <label><input type="radio" name="q17" value="a"> a. Tidak memiliki user interface</label><br>
+        <label><input type="radio" name="q17" value="b"> b. Bersifat open source</label><br>
+        <label><input type="radio" name="q17" value="c"> c. Memiliki kernel yang terenkripsi</label><br>
+        <label><input type="radio" name="q17" value="d"> d. Memiliki kontrol hak akses yang ketat</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 18:</legend>
+        <p>Salah satu penyebab kebocoran database adalah:</p>
+        <label><input type="radio" name="q18" value="a"> a. Penggunaan firewall</label><br>
+        <label><input type="radio" name="q18" value="b"> b. Penerapan RBAC</label><br>
+        <label><input type="radio" name="q18" value="c"> c. Penggunaan password default</label><br>
+        <label><input type="radio" name="q18" value="d"> d. Enkripsi data</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 19:</legend>
+        <p>Salah satu fungsi stream cipher dalam kriptografi adalah:</p>
+        <label><input type="radio" name="q19" value="a"> a. Mengacak posisi huruf</label><br>
+        <label><input type="radio" name="q19" value="b"> b. Menyimpan data terenkripsi</label><br>
+        <label><input type="radio" name="q19" value="c"> c. Mengenkripsi bit per bit secara berurutan</label><br>
+        <label><input type="radio" name="q19" value="d"> d. Menghasilkan kunci publik</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 20:</legend>
+        <p>Caesar Cipher menggunakan metode:</p>
+        <label><input type="radio" name="q20" value="a"> a. Transposisi huruf</label><br>
+        <label><input type="radio" name="q20" value="b"> b. Pergeseran huruf</label><br>
+        <label><input type="radio" name="q20" value="c"> c. XOR antar karakter</label><br>
+        <label><input type="radio" name="q20" value="d"> d. Polyalphabetic encryption</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 21:</legend>
+        <p>Manakah dari berikut ini yang termasuk dalam prinsip non-repudiation?</p>
+        <label><input type="radio" name="q21" value="a"> a. Enkripsi data</label><br>
+        <label><input type="radio" name="q21" value="b"> b. Autentikasi biometrik</label><br>
+        <label><input type="radio" name="q21" value="c"> c. Tidak bisa menyangkal telah melakukan suatu aksi</label><br>
+        <label><input type="radio" name="q21" value="d"> d. Kontrol akses berdasarkan waktu</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 22:</legend>
+        <p>Serangan yang mengubah data tanpa izin disebut:</p>
+        <label><input type="radio" name="q22" value="a"> a. Interception</label><br>
+        <label><input type="radio" name="q22" value="b"> b. Modification</label><br>
+        <label><input type="radio" name="q22" value="c"> c. Fabrication</label><br>
+        <label><input type="radio" name="q22" value="d"> d. Interruption</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 23:</legend>
+        <p>Fungsi utama dari Trusted Guards adalah:</p>
+        <label><input type="radio" name="q23" value="a"> a. Mengelola password pengguna</label><br>
+        <label><input type="radio" name="q23" value="b"> b. Menyaring lalu lintas jaringan berdasarkan level klasifikasi</label><br>
+        <label><input type="radio" name="q23" value="c"> c. Menghapus malware dari sistem</label><br>
+        <label><input type="radio" name="q23" value="d"> d. Melakukan otentikasi dua faktor</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 24:</legend>
+        <p>Apa fungsi TACACS dalam jaringan komputer?</p>
+        <label><input type="radio" name="q24" value="a"> a. Menyimpan data sementara</label><br>
+        <label><input type="radio" name="q24" value="b"> b. Autentikasi dan kontrol akses terpusat</label><br>
+        <label><input type="radio" name="q24" value="c"> c. Mempercepat koneksi LAN</label><br>
+        <label><input type="radio" name="q24" value="d"> d. Enkripsi komunikasi lokal</label>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Soal 25:</legend>
+        <p>Salah satu bentuk keamanan fisik terhadap sistem operasi adalah:</p>
+        <label><input type="radio" name="q25" value="a"> a. Firewall</label><br>
+        <label><input type="radio" name="q25" value="b"> b. Backup data</label><br>
+        <label><input type="radio" name="q25" value="c"> c. Akses ruang server yang dibatasi</label><br>
+        <label><input type="radio" name="q25" value="d"> d. Windows Defender</label>
+    </fieldset>
+    
+    <div>
+        <h3>Penilaian:</h3>
+        <p><strong>Jumlah Poin:</strong> <span id="score" class="score">0</span></p>
+    </div>
+    
+    <button type="button" onclick="calculateScore()">Submit</button>
+    <button type="button" id="download-btn" style="display: none;" onclick="downloadResults()">Download Results</button>
+</form>
+</div>
+<script>
+    const correctAnswers = [
+        "b", "c", "c", "b", "c", "c", "c", "b", "a", "c",
+        "c", "b", "b", "b", "b", "b", "c", "b", "c", "c",
+        "c", "b", "c", "c", "c", "b"
+    ];
+    
+    function calculateScore() {
+        let score = 0;
+        for (let i = 1; i <= 25; i++) {
+            const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selectedAnswer && selectedAnswer.value === correctAnswers[i - 1]) {
+                score += 2;
+            }
+        }
+        document.getElementById('score').textContent = score;
+        document.getElementById('download-btn').style.display = 'block'; // Show download button
+    }
+
+    function downloadResults() {
+        const score = document.getElementById('score').textContent;
+        const results = `Nama Taruna: ${document.getElementById('nama-taruna').value}
+Kelas: ${document.getElementById('kelas').value}
+No. AK: ${document.getElementById('no-ak').value}
+Skor: ${score}`;
+        const blob = new Blob([results], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'hasil_ujian.txt';
+        link.click();
+    }
+</script>
+</body>
+</html>
